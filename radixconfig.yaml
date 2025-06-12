@@ -1,0 +1,16 @@
+apiVersion: radix.equinor.com/v1
+kind: RadixApplication
+metadata:
+  name: nicegui-test
+spec:
+  environments:
+    - name: dev
+      build:
+        from: main
+  components:
+    - name: web
+      src: .
+      publicPort: http
+      ports:
+        - name: http
+          port: 8080

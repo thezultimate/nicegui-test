@@ -1,15 +1,18 @@
-# Use the official NiceGUI image as the base image
-FROM zauberzeug/nicegui:latest
+FROM python:3.12-slim
 
-# RUN pip install nicegui[highcharts]
-# Set working directory
+RUN python -m pip install --upgrade pip
+
+RUN python -m pip install nicegui
+
 WORKDIR /app
 
-# Copy the application code to the container
-COPY ./app /app
+COPY ./app ./
 
-# Expose the port your NiceGUI app runs on (default is 8080)
+RUN addgroup --system --gid 1001 radix-non-root-group
+RUN adduser --system --uid 1001 --ingroup radix-non-root-group --home /home/radix-non-root-user radix-non-root-user
+RUN chown -R radix-non-root-user:radix-non-root-group /app /home/radix-non-root-user
+USER 1001
+
 EXPOSE 8080
 
-# Set the default command to run the NiceGUI app
 CMD ["python", "main.py"]
