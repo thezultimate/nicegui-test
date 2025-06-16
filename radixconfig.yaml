@@ -14,3 +14,19 @@ spec:
       ports:
         - name: http
           port: 8080
+      authentication:
+        oauth2:
+          clientId: 144c7e73-a48d-4143-a5ee-84affbca7081
+          scope: openid profile email offline_access
+          setXAuthRequestHeaders: true
+          setAuthorizationHeader: true
+          sessionStoreType: redis
+          redisStore:
+            connectionUrl: redis://redis:6379
+    - name: redis
+      image: bitnami/redis:latest
+      secrets:
+        - REDIS_PASSWORD
+      ports:
+        - name: redis
+          port: 6379
